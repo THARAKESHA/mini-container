@@ -8,7 +8,9 @@
 ### Submitted in Partial Fulfillment of the Requirements for the Course
 ### **OPERATING SYSTEMS (CSE Core)**
 
-**Student Name:** Tharakesha  
+**Team Members:**  
+1. **Tharakesha M** (Reg No: **24BCE2538**)  
+2. **Mathu Metha S** (Reg No: **24BCE2805**)  
 **Department:** Department of Computer Science & Engineering  
 **Academic Year:** 2026  
 
@@ -16,7 +18,7 @@
 
 ## CERTIFICATE
 
-This is to certify that the project entitled **"DESIGN AND IMPLEMENTATION OF A LIGHTWEIGHT LINUX CONTAINER RUNTIME FROM SCRATCH IN C"** is a bonafide work carried out by **Tharakesha** in partial fulfillment of the academic requirements for the **Operating Systems** course.
+This is to certify that the project entitled **"DESIGN AND IMPLEMENTATION OF A LIGHTWEIGHT LINUX CONTAINER RUNTIME FROM SCRATCH IN C"** is a bonafide work carried out by **Tharakesha M (24BCE2538)** and **Mathu Metha S (24BCE2805)** in partial fulfillment of the academic requirements for the **Operating Systems** course.
 
 ---
 
