@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Operating Systems Project Report - Mini-Container</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm;
+        }
+
+        body {
+            font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background: #ffffff;
+            margin: 0;
+            padding: 20px;
+            font-size: 11pt;
+        }
+
+        h1, h2, h3, h4 {
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 20pt;
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        h2 {
+            font-size: 14pt;
+            border-bottom: 2px solid #0284c7;
+            padding-bottom: 4px;
+            margin-top: 28px;
+            margin-bottom: 12px;
+            page-break-after: avoid;
+        }
+
+        h3 {
+            font-size: 12pt;
+            color: #0369a1;
+            margin-top: 18px;
+            margin-bottom: 8px;
+            page-break-after: avoid;
+        }
+
+        p {
+            margin-bottom: 10px;
+            text-align: justify;
+        }
+
+        .title-page {
+            text-align: center;
+            padding: 40px 20px;
+            page-break-after: always;
+        }
+
+        .subtitle {
+            font-size: 13pt;
+            color: #475569;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .meta-box {
+            margin: 40px auto;
+            padding: 20px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            width: 80%;
+            text-align: left;
+            background: #f8fafc;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 10pt;
+            page-break-inside: avoid;
+        }
+
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+        pre {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-family: Consolas, Monaco, "Courier New", monospace;
+            font-size: 9pt;
+            overflow-x: auto;
+            margin: 12px 0;
+            page-break-inside: avoid;
+        }
+
+        code {
+            font-family: Consolas, Monaco, monospace;
+            background: #f1f5f9;
+            color: #0369a1;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 9.5pt;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0284c7;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 9pt;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .qna-box {
+            background: #f8fafc;
+            border-left: 4px solid #0284c7;
+            padding: 10px 14px;
+            margin-bottom: 12px;
+            border-radius: 0 6px 6px 0;
+            page-break-inside: avoid;
+        }
+
+        .qna-box strong {
+            color: #0f172a;
+        }
+
+        .page-break {
+            page-break-after: always;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COVER PAGE -->
+    <div class="title-page">
+        <div class="badge">ACADEMIC PROJECT REPORT</div>
+        <h1>DESIGN AND IMPLEMENTATION OF A LIGHTWEIGHT LINUX CONTAINER RUNTIME FROM SCRATCH IN C</h1>
+        <p class="subtitle">Operating System Virtualization, Cgroups v2, Concurrency, and Memory Protection</p>
+
+        <div style="margin: 40px 0;">
+            <p><strong>Course:</strong> Operating Systems (CSE Core)</p>
+            <p><strong>Implementation:</strong> C99 / POSIX System Calls & Linux Kernel 6.x</p>
+        </div>
+
+        <div class="meta-box">
+            <p><strong>Candidate Name:</strong> Tharakesha</p>
+            <p><strong>Department:</strong> Department of Computer Science & Engineering</p>
+            <p><strong>Academic Year:</strong> 2026</p>
+            <p><strong>Project Codebase:</strong> <code>mini-container</code> (Zero External Runtime Dependencies)</p>
+        </div>
+    </div>
+
+    <!-- ABSTRACT -->
+    <h2>1. ABSTRACT</h2>
+    <p>
+        Modern cloud computing and DevOps infrastructure depend fundamentally on container virtualization platforms such as Docker and Kubernetes. However, containers are often perceived as complex abstractions without an understanding of the underlying kernel architecture.
+    </p>
+    <p>
+        This project designs, implements, and evaluates <strong><code>mini-container</code></strong>, a standalone, lightweight container runtime written from scratch in pure <strong>C99</strong> with zero third-party libraries. By directly interfacing with Linux kernel subsystems—specifically <strong>Linux Namespaces</strong> (<code>CLONE_NEWPID</code>, <code>CLONE_NEWUTS</code>, <code>CLONE_NEWNS</code>, <code>CLONE_NEWIPC</code>), <strong>Unified Cgroups v2</strong> (<code>memory.max</code>, <code>cpu.max</code>, <code>cpu.weight</code>, <code>pids.max</code>), and <strong>VFS filesystem sandboxing</strong>—the runtime achieves complete hardware resource confinement and process tree isolation.
+    </p>
+    <p>
+        The project experimentally demonstrates all five Course Outcomes (CO: 1 to CO: 5) of the Operating Systems syllabus, including system call dispatch, Completely Fair Scheduling (CFS), POSIX semaphore synchronization, demand paging accounting (minor and major page faults), and kernel Out-Of-Memory (OOM) Killer execution.
+    </p>
+
+    <!-- LITERATURE SURVEY -->
+    <h2>2. LITERATURE SURVEY: CONTAINERS VS. VIRTUAL MACHINES</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Dimension</th>
+                <th>Virtual Machines (VMs)</th>
+                <th>Operating System Containers (mini-container)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Virtualization Layer</strong></td>
+                <td>Hardware Level (Hypervisor)</td>
+                <td>Kernel Level (Namespaces & Cgroups)</td>
+            </tr>
+            <tr>
+                <td><strong>Guest OS Kernel</strong></td>
+                <td>Requires separate guest OS kernel</td>
+                <td>Shares single host Linux kernel</td>
+            </tr>
+            <tr>
+                <td><strong>Boot Latency</strong></td>
+                <td>Tens of seconds to minutes</td>
+                <td>Sub-second (10 - 20 milliseconds)</td>
+            </tr>
+            <tr>
+                <td><strong>Memory Footprint</strong></td>
+                <td>Gigabytes (Guest OS memory overhead)</td>
+                <td>Megabytes (Confined purely to user application)</td>
+            </tr>
+            <tr>
+                <td><strong>Performance</strong></td>
+                <td>Incurs hardware translation penalties</td>
+                <td>Near-native bare-metal execution speed</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- SYLLABUS MAPPING -->
+    <h2>3. COURSE OUTCOMES (CO) ALIGNMENT MATRIX</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Course Outcome</th>
+                <th>Syllabus Topics</th>
+                <th>Implementation in mini-container</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>CO 1: OS Principles</strong></td>
+                <td>System calls, Protection modes, PCB, Process creation</td>
+                <td><code>clone()</code> syscall with isolated stack, <code>waitpid()</code>, PCB lifecycle</td>
+            </tr>
+            <tr>
+                <td><strong>CO 2: CPU Scheduling</strong></td>
+                <td>Preemptive quotas, CFS scheduling, Proportional share</td>
+                <td>Cgroups v2 <code>cpu.max</code> (quota/period) and <code>cpu.weight</code> fair share contest</td>
+            </tr>
+            <tr>
+                <td><strong>CO 3: Concurrency & IPC</strong></td>
+                <td>Synchronization primitives, Semaphores, IPC</td>
+                <td>POSIX <code>pipe()</code> barrier, Producer-Consumer with <code>sem_t</code> and shared memory</td>
+            </tr>
+            <tr>
+                <td><strong>CO 4: Memory Management</strong></td>
+                <td>Virtual memory ceilings, Page faults, Demand paging</td>
+                <td>Cgroups v2 <code>memory.max</code>, <code>pgfault</code> tracking, kernel OOM Killer <code>SIGKILL</code></td>
+            </tr>
+            <tr>
+                <td><strong>CO 5: Virtualization & Filesystems</strong></td>
+                <td>Container virtualization, VFS, Private mounts</td>
+                <td><code>CLONE_NEWNS</code> mount isolation, <code>chroot()</code>, private <code>/proc</code> mount</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <!-- ARCHITECTURE -->
+    <h2>4. SYSTEM ARCHITECTURE & EXECUTION FLOW</h2>
+    <pre>
+User CLI Command:
+sudo ./minicontainer run --memory 30M --cpu 40 --pids 10 ./tests/test_memory 60
+                         │
+                         ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1. PARENT PROCESS (Host Environment)                                        │
+│    - Allocates 1MB isolated child stack using malloc()                      │
+│    - Creates UNIX synchronization pipe (sync_pipe)                          │
+│    - Invokes clone(child, stack, CLONE_NEWPID | CLONE_NEWUTS | ...)         │
+│    - Configures /sys/fs/cgroup/minicontainer-[PID]:                         │
+│      * memory.max = 30M, memory.swap.max = 0                                │
+│      * cpu.max = 40000 100000 (40% CFS Quota)                               │
+│      * pids.max = 10 (Process Table Protection)                             │
+│    - Attaches child PID to cgroup.procs                                     │
+│    - Releases sync_pipe barrier (Signals child to continue)                 │
+│    - Blocks on waitpid() to monitor execution status                        │
+└──────────────────────────────────────┬──────────────────────────────────────┘
+                                       │ (IPC Barrier Synchronization)
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 2. CONTAINER CHILD PROCESS (Sandbox Environment)                            │
+│    - Blocks on read(sync_pipe) until parent completes cgroup binding        │
+│    - Sets independent UTS Hostname via sethostname("isolated-box")          │
+│    - Enforces MS_PRIVATE mount propagation to decouple VFS hierarchy         │
+│    - Executes chroot(rootfs) into Alpine Linux root directory               │
+│    - Mounts private /proc pseudo-filesystem (PID 1 view)                    │
+│    - Replaces image via execvp() (Becomes PID 1)                            │
+└──────────────────────────────────────┬──────────────────────────────────────┘
+                                       │ (Process Exit / OOM Kill)
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 3. PARENT POST-EXECUTION ACCOUNTING & TEARDOWN                              │
+│    - Inspects /sys/fs/cgroup/minicontainer-[PID]/memory.stat                │
+│    - Reports: Peak RAM, Minor Page Faults, Major Page Faults                │
+│    - Detects OOM Killer intervention via WIFSIGNALED(status) [SIGKILL]      │
+│    - Deletes cgroup directory via rmdir() and frees child stack             │
+└─────────────────────────────────────────────────────────────────────────────┘
+    </pre>
+
+    <!-- EXPERIMENTAL RESULTS -->
+    <h2>5. EXPERIMENTAL RESULTS & EMPIRICAL VALIDATION</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Experiment</th>
+                <th>Configuration</th>
+                <th>Observed Output</th>
+                <th>Syllabus Concept Verified</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>1. Process Isolation</strong></td>
+                <td><code>--hostname isolated-box ./tests/test_info</code></td>
+                <td>Process runs as <strong>PID 1</strong>; host processes hidden</td>
+                <td>CO: 1 & CO: 5 (Namespaces)</td>
+            </tr>
+            <tr>
+                <td><strong>2. Memory Limit & OOM</strong></td>
+                <td><code>--memory 30M ./tests/test_memory 60</code></td>
+                <td>Allocated up to 30MB; terminated by <strong>SIGKILL (signal 9)</strong>; logged <strong>7,705 Page Faults</strong></td>
+                <td>CO: 4 (Virtual Memory & Demand Paging)</td>
+            </tr>
+            <tr>
+                <td><strong>3. CPU Quota Throttling</strong></td>
+                <td><code>--cpu 40 ./tests/test_cpu 3</code></td>
+                <td>Compute loop clamped at <strong>37.4%</strong> CPU usage</td>
+                <td>CO: 2 (CFS Scheduling Quotas)</td>
+            </tr>
+            <tr>
+                <td><strong>4. CPU Fair-Share Contest</strong></td>
+                <td>Contest: Weight 800 vs Weight 200 on Core 0</td>
+                <td>CPU time: <strong>2.78s vs 0.69s</strong> (Exact <strong>4.02 : 1</strong> ratio)</td>
+                <td>CO: 2 (Proportional Share Scheduling)</td>
+            </tr>
+            <tr>
+                <td><strong>5. Concurrency & IPC</strong></td>
+                <td><code>./tests/test_ipc_sync</code></td>
+                <td>10 items produced/consumed cleanly via <code>sem_t</code></td>
+                <td>CO: 3 (Semaphores & Shared Memory)</td>
+            </tr>
+            <tr>
+                <td><strong>6. Fork Bomb Defense</strong></td>
+                <td><code>--pids 10 ./tests/test_forkbomb 50</code></td>
+                <td>Fork #10 blocked with <strong>EAGAIN (errno 11)</strong></td>
+                <td>CO: 1 & CO: 3 (Process Table Protection)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <!-- VIVA VOCE DEFENSE -->
+    <h2>6. VIVA VOCE DEFENSE CHEAT SHEET (TOP FACULTY QUESTIONS)</h2>
+
+    <div class="qna-box">
+        <p><strong>Q1: Why did you use <code>clone()</code> instead of standard <code>fork()</code>?</strong></p>
+        <p><em>Answer:</em> <code>fork()</code> duplicates the process in the exact same namespaces. <code>clone()</code> accepts flags like <code>CLONE_NEWPID</code> and <code>CLONE_NEWUTS</code>, instructing the Linux kernel to instantiate the child directly inside brand-new, isolated namespaces.</p>
+    </div>
+
+    <div class="qna-box">
+        <p><strong>Q2: Why did your memory test trigger <code>SIGKILL</code> instead of <code>malloc()</code> returning NULL?</strong></p>
+        <p><em>Answer:</em> Linux uses optimistic memory allocation (overcommit) and demand paging. <code>malloc()</code> initially reserves virtual address space without committing physical pages. When <code>memset()</code> touched the pages, memory demand crossed <code>memory.max</code>. With swap disabled, the kernel Out-Of-Memory (OOM) Killer stepped in and dispatched an uncatchable <code>SIGKILL</code>.</p>
+    </div>
+
+    <div class="qna-box">
+        <p><strong>Q3: What is the purpose of the POSIX pipe between parent and child?</strong></p>
+        <p><em>Answer:</em> It acts as a barrier synchronization mechanism (CO: 3). Without it, a race condition occurs where the child might call <code>execvp()</code> before the parent finishes creating the cgroup and writing the child's PID into <code>cgroup.procs</code>.</p>
+    </div>
+
+    <div class="qna-box">
+        <p><strong>Q4: How did your project prove CPU scheduling fairness?</strong></p>
+        <p><em>Answer:</em> We ran two containers simultaneously pinned to CPU Core 0 with CFS weights of 800 and 200. The high-weight container received 2.78 seconds of CPU time while the low-weight container received 0.69 seconds, achieving an exact 4:1 execution ratio matching theoretical scheduling weights.</p>
+    </div>
+
+    <div class="qna-box">
+        <p><strong>Q5: What are Minor Page Faults and how did you verify them?</strong></p>
+        <p><em>Answer:</em> Minor page faults occur when virtual pages are mapped to physical RAM without requiring disk I/O. We parsed <code>/sys/fs/cgroup/minicontainer-[PID]/memory.stat</code> and recorded over 7,700 minor page faults during memory allocation, proving demand paging in the memory management unit.</p>
+    </div>
+
+    <!-- CONCLUSION -->
+    <h2>7. CONCLUSION</h2>
+    <p>
+        The <strong><code>mini-container</code></strong> project demonstrates that robust operating system virtualization, process isolation, CPU scheduling, concurrency synchronization, and memory protection can be achieved purely using native Linux kernel subsystems in C with zero external runtime overhead. The project completely satisfies all Course Outcomes (CO: 1 to CO: 5) and offers a production-grade systems engineering demonstration for academic evaluation.
+    </p>
+
+</body>
+</html>

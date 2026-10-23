@@ -1,0 +1,16 @@
+# Compiled binaries & objects
+*.o
+minicontainer
+tests/test_cpu
+tests/test_forkbomb
+tests/test_info
+tests/test_ipc_sync
+tests/test_memory
+
+# Downloaded Rootfs & Cgroup mounts
+rootfs/
+*.tar.gz
+
+# Logs & temp files
+*.log
+/tmp/
