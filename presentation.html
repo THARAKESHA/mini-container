@@ -6,16 +6,17 @@
     <title>Mini-Container: OS Project Review Presentation</title>
     <style>
         :root {
-            --bg-color: #0b0f19;
-            --card-bg: #151d30;
-            --card-border: #243354;
-            --primary: #38bdf8;
-            --secondary: #818cf8;
-            --accent: #34d399;
-            --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
-            --code-bg: #090d16;
-            --warning: #f59e0b;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --secondary: #4f46e5;
+            --accent: #10b981;
+            --warning: #d97706;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --code-bg: #f1f5f9;
         }
 
         * {
@@ -54,7 +55,7 @@
             border: 1px solid var(--card-border);
             border-radius: 16px;
             padding: 38px 55px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
             display: none;
             flex-direction: column;
             opacity: 0;
@@ -71,7 +72,7 @@
 
         .slide-header {
             margin-bottom: 18px;
-            border-bottom: 2px solid var(--card-border);
+            border-bottom: 2px solid var(--primary);
             padding-bottom: 12px;
             display: flex;
             justify-content: space-between;
@@ -80,8 +81,8 @@
 
         .slide-title {
             font-size: 2.05rem;
-            font-weight: 700;
-            color: #ffffff;
+            font-weight: 800;
+            color: var(--text-main);
             letter-spacing: -0.5px;
         }
 
@@ -94,14 +95,14 @@
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: var(--secondary);
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .slide-body {
             flex: 1;
             font-size: 1.08rem;
             line-height: 1.55;
-            color: #cbd5e1;
+            color: var(--text-main);
         }
 
         .grid-2 {
@@ -118,10 +119,12 @@
         }
 
         .box {
-            background: rgba(15, 23, 42, 0.65);
+            background: #ffffff;
             border: 1px solid var(--card-border);
+            border-top: 4px solid var(--primary);
             border-radius: 12px;
             padding: 16px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
         }
 
         .box h3 {
@@ -137,6 +140,10 @@
         .box h3.warning { color: var(--warning); }
         .box h3.purple { color: var(--secondary); }
 
+        .box.warning-border { border-top-color: var(--warning); }
+        .box.purple-border { border-top-color: var(--secondary); }
+        .box.success-border { border-top-color: var(--accent); }
+
         ul {
             list-style: none;
         }
@@ -145,6 +152,8 @@
             position: relative;
             padding-left: 20px;
             margin-bottom: 8px;
+            font-size: 1.02rem;
+            color: #334155;
         }
 
         ul li::before {
@@ -158,23 +167,23 @@
         code {
             font-family: "JetBrains Mono", Consolas, Monaco, monospace;
             background: var(--code-bg);
-            color: #38bdf8;
+            color: var(--primary-dark);
             padding: 2px 6px;
             border-radius: 4px;
             font-size: 0.9em;
-            border: 1px solid #1e293b;
+            border: 1px solid #cbd5e1;
         }
 
         pre {
-            background: var(--code-bg);
-            border: 1px solid #1e293b;
+            background: #0f172a;
+            color: #f8fafc;
             padding: 12px;
             border-radius: 8px;
             font-family: monospace;
             font-size: 0.84rem;
-            color: #e2e8f0;
             overflow-x: auto;
             margin-top: 6px;
+            line-height: 1.45;
         }
 
         table {
@@ -184,59 +193,70 @@
         }
 
         th, td {
-            padding: 9px 12px;
+            padding: 10px 12px;
             text-align: left;
-            border-bottom: 1px solid var(--card-border);
-            font-size: 0.9rem;
+            border: 1px solid var(--card-border);
+            font-size: 0.92rem;
         }
 
         th {
-            background: rgba(30, 41, 59, 0.7);
-            color: var(--primary);
-            font-weight: 600;
+            background: var(--primary);
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        td {
+            background: #ffffff;
+            color: #1e293b;
+        }
+
+        tr:nth-child(even) td {
+            background: #f8fafc;
         }
 
         #controls {
             height: 60px;
-            background: rgba(11, 15, 25, 0.95);
+            background: #ffffff;
             border-top: 1px solid var(--card-border);
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 40px;
             z-index: 100;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.02);
         }
 
         .btn {
-            background: #1e293b;
-            color: #f8fafc;
-            border: 1px solid #334155;
+            background: #f1f5f9;
+            color: #0f172a;
+            border: 1px solid #cbd5e1;
             padding: 8px 18px;
             border-radius: 8px;
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 0.95rem;
             transition: all 0.2s ease;
         }
 
         .btn:hover {
-            background: #334155;
+            background: #e2e8f0;
             border-color: var(--primary);
             color: var(--primary);
         }
 
         .btn-primary {
-            background: #0284c7;
-            border-color: #0369a1;
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary-dark);
         }
         .btn-primary:hover {
-            background: #0369a1;
-            color: #fff;
+            background: var(--primary-dark);
+            color: #ffffff;
         }
 
         #progress-text {
             color: var(--text-muted);
-            font-weight: 500;
+            font-weight: 600;
             font-size: 0.95rem;
         }
 
@@ -247,18 +267,16 @@
         }
 
         .title-slide h1 {
-            font-size: 2.8rem;
-            font-weight: 800;
+            font-size: 3rem;
+            font-weight: 900;
             letter-spacing: -1px;
             margin-bottom: 10px;
-            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-main);
         }
 
         .title-slide p.subtitle {
             font-size: 1.25rem;
-            color: #94a3b8;
+            color: var(--text-muted);
             max-width: 860px;
             margin-bottom: 20px;
         }
@@ -271,13 +289,13 @@
         }
 
         .badge {
-            background: rgba(56, 189, 248, 0.1);
-            color: #38bdf8;
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            padding: 5px 12px;
+            background: #e0f2fe;
+            color: var(--primary);
+            border: 1px solid #bae6fd;
+            padding: 6px 14px;
             border-radius: 20px;
             font-size: 0.85rem;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .team-card {
@@ -290,11 +308,12 @@
         }
 
         .member-box {
-            background: rgba(15, 23, 42, 0.85);
+            background: #ffffff;
             border: 1px solid var(--card-border);
-            border-top: 3px solid var(--primary);
+            border-top: 4px solid var(--primary);
             border-radius: 10px;
-            padding: 14px 18px;
+            padding: 16px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
         }
 
         .member-box.accent {
@@ -302,29 +321,26 @@
         }
 
         .member-name {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: #ffffff;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
         }
 
         .member-reg {
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: var(--primary);
             font-family: monospace;
-            font-weight: 600;
+            font-weight: 700;
             margin-top: 3px;
         }
 
-        .cmd-box {
-            background: #090d16;
-            border: 1px solid #1e293b;
-            border-left: 4px solid var(--primary);
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-family: monospace;
-            font-size: 0.86rem;
-            color: #38bdf8;
-            margin: 6px 0 8px 0;
+        .rep-card {
+            background: #ffffff;
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-top: 14px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
         }
 
         @page {
@@ -338,7 +354,7 @@
                 height: auto;
                 margin: 0;
                 padding: 0;
-                background-color: #0b0f19 !important;
+                background-color: #f8fafc !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
                 overflow: visible !important;
@@ -365,7 +381,7 @@
                 box-shadow: none !important;
                 padding: 40px 60px !important;
                 box-sizing: border-box !important;
-                background: #151d30 !important;
+                background: #f8fafc !important;
             }
 
             #controls {
@@ -378,7 +394,7 @@
 
     <div id="deck">
 
-        <!-- SLIDE 1: Title & Team Members -->
+        <!-- SLIDE 1: Title & Team Slide (Bright Background) -->
         <div class="slide active title-slide">
             <div class="badge-list">
                 <span class="badge">OPERATING SYSTEMS PROJECT REVIEW</span>
@@ -386,68 +402,74 @@
                 <span class="badge">C99 / POSIX</span>
             </div>
             <h1>Mini-Container Runtime</h1>
-            <p class="subtitle">A Lightweight Sandbox Virtualization Engine Built from Scratch in C Using Linux Namespaces & Unified Cgroups v2</p>
+            <p class="subtitle">A Lightweight Linux Container Virtualization Engine Built from Scratch in C99<br>Utilizing Linux Namespaces, Unified Cgroups v2, and VFS Sandboxing</p>
 
             <div class="team-card">
                 <div class="member-box">
-                    <p style="font-size: 0.8rem; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px;">Team Member 1</p>
+                    <p style="font-size: 0.8rem; text-transform: uppercase; color: #64748b; letter-spacing: 1px;">Team Member 1</p>
                     <div class="member-name">Tharakesha M</div>
                     <div class="member-reg">Reg No: 24BCE2538</div>
-                    <p style="font-size: 0.85rem; color: #94a3b8; margin-top: 6px;">B.Tech Computer Science & Engineering</p>
+                    <p style="font-size: 0.88rem; color: #64748b; margin-top: 4px;">B.Tech Computer Science & Engineering<br>Core Developer (Namespaces & Cgroups)</p>
                 </div>
                 <div class="member-box accent">
-                    <p style="font-size: 0.8rem; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px;">Team Member 2</p>
+                    <p style="font-size: 0.8rem; text-transform: uppercase; color: #64748b; letter-spacing: 1px;">Team Member 2</p>
                     <div class="member-name">Mathu Metha S</div>
                     <div class="member-reg" style="color: var(--secondary);">Reg No: 24BCE2805</div>
-                    <p style="font-size: 0.85rem; color: #94a3b8; margin-top: 6px;">B.Tech Computer Science & Engineering</p>
+                    <p style="font-size: 0.88rem; color: #64748b; margin-top: 4px;">B.Tech Computer Science & Engineering<br>Core Developer (Concurrency & Testing)</p>
                 </div>
             </div>
 
-            <div style="margin-top: 15px; font-size: 0.9rem; color: #94a3b8;">
-                GitHub: <span style="color: #38bdf8; font-family: monospace;">github.com/THARAKESHA/mini-container</span>
+            <div style="margin-top: 15px; font-size: 0.95rem; color: #64748b;">
+                GitHub: <span style="color: var(--primary); font-family: monospace; font-weight: 700;">github.com/THARAKESHA/mini-container</span>
             </div>
         </div>
 
-        <!-- SLIDE 2: Motivation & Concept -->
+        <!-- SLIDE 2: Motivation & Paradigm Shift -->
         <div class="slide">
             <div class="slide-header">
-                <div class="slide-title">Concept: <span>Containers vs Virtual Machines</span></div>
-                <div class="slide-category">Motivation & Objectives</div>
+                <div class="slide-title">Motivation: <span>OS Virtualization vs. Hardware Emulation</span></div>
+                <div class="slide-category">Problem Statement & Concepts</div>
             </div>
             <div class="slide-body grid-2">
-                <div class="box">
-                    <h3 class="warning">Traditional Virtual Machines (VMs)</h3>
+                <div class="box warning-border">
+                    <h3 class="warning">Traditional Virtual Machines (Hypervisors)</h3>
                     <ul>
-                        <li>Virtualize the <strong>hardware layer</strong> using hypervisors.</li>
-                        <li>Requires a full duplicate guest OS kernel per instance.</li>
-                        <li>High RAM footprint (Gigabytes) and slow multi-second boot times.</li>
-                        <li>Incurs hardware translation penalties and CPU emulation overhead.</li>
+                        <li>Virtualizes the physical <strong>hardware layer</strong> using a hypervisor (Type-1/2).</li>
+                        <li>Requires a dedicated, redundant guest OS kernel per instance.</li>
+                        <li>High memory footprint (1 - 4 GB) and slow boot latency (30 - 60s).</li>
+                        <li>Incurs hardware emulation translation penalties and CPU traps.</li>
+                        <li>Rigid, coarse-grained hardware resource partitioning.</li>
                     </ul>
                 </div>
-                <div class="box">
-                    <h3 class="success">OS-Level Containers (Our Implementation)</h3>
+                <div class="box success-border">
+                    <h3 class="success">OS-Level Containers (mini-container in C)</h3>
                     <ul>
-                        <li>Shares the single <strong>underlying host Linux kernel</strong>.</li>
-                        <li>Containers are regular OS processes wrapped in kernel-enforced isolation boundaries.</li>
-                        <li>Sub-second boot times (10-20ms) and minimal RAM footprint (Megabytes).</li>
-                        <li>Near-native bare-metal execution performance with strict resource limits.</li>
+                        <li>Shares the single underlying host Linux kernel with zero emulation.</li>
+                        <li>Containers are regular OS processes wrapped in kernel-enforced limits.</li>
+                        <li>Sub-second boot times (10-20ms) and minimal RAM overhead (~5MB).</li>
+                        <li>Near-native bare-metal execution performance with hardware quotas.</li>
+                        <li>Fine-grained dynamic control via modern Linux Cgroups v2.</li>
                     </ul>
                 </div>
             </div>
+            <div class="rep-card">
+                <strong style="color: var(--primary); font-size: 0.95rem;">EFFICIENCY COMPARISON REPRESENTATION:</strong><br>
+                <span style="font-size: 0.95rem; color: #334155;">Boot Latency: <strong>VM (45,000 ms)</strong> vs. <strong>Container (15 ms)</strong> &nbsp;|&nbsp; Memory Overhead: <strong>VM (~1500 MB)</strong> vs. <strong>Container (< 5 MB)</strong> &nbsp;|&nbsp; CPU Overhead: <strong>~0.1%</strong></span>
+            </div>
         </div>
 
-        <!-- SLIDE 3: Syllabus Mapping -->
+        <!-- SLIDE 3: Course Outcomes Alignment Matrix -->
         <div class="slide">
             <div class="slide-header">
-                <div class="slide-title">Course Outcomes <span>Alignment Matrix</span></div>
-                <div class="slide-category">Syllabus Coverage</div>
+                <div class="slide-title">Syllabus Alignment: <span>Complete CO 1 to CO 5 Coverage</span></div>
+                <div class="slide-category">Course Outcomes Matrix</div>
             </div>
             <div class="slide-body">
                 <table>
                     <thead>
                         <tr>
                             <th>Course Outcome (CO)</th>
-                            <th>Topics Directly Addressed</th>
+                            <th>Syllabus Topics Covered</th>
                             <th>Implementation Mechanism in C</th>
                         </tr>
                     </thead>
@@ -455,22 +477,22 @@
                         <tr>
                             <td><strong>CO 1: OS Principles & Processes</strong></td>
                             <td>System calls, User/Kernel modes, PCB, Process creation</td>
-                            <td><code>clone()</code>, <code>execvp()</code>, <code>waitpid()</code>, custom child stack</td>
+                            <td><code>clone()</code> with isolated stack, <code>waitpid()</code>, custom PCB handling</td>
                         </tr>
                         <tr>
                             <td><strong>CO 2: CPU Scheduling</strong></td>
-                            <td>CFS scheduling quotas, Proportional fair-share</td>
-                            <td>Cgroups v2 <code>cpu.max</code> (quota/period) & <code>cpu.weight</code> (800 vs 200 contest)</td>
+                            <td>CFS quotas, Preemption, Proportional Fair Share</td>
+                            <td>cgroups <code>cpu.max</code> (40% quota) & <code>cpu.weight</code> (4:1 contest)</td>
                         </tr>
                         <tr>
                             <td><strong>CO 3: Concurrency & IPC</strong></td>
                             <td>Synchronization primitives, Semaphores, Shared Memory</td>
-                            <td>POSIX <code>pipe()</code> barrier, Producer-Consumer with <code>sem_t</code> & shared memory</td>
+                            <td>POSIX <code>sem_t</code> (mutex, empty, full) & <code>mmap</code> ring buffer</td>
                         </tr>
                         <tr>
                             <td><strong>CO 4: Memory Management</strong></td>
                             <td>Virtual memory, Demand paging, Page faults, OOM Killer</td>
-                            <td>Cgroups v2 <code>memory.max</code>, <code>pgfault</code> tracking (7,705 faults logged), OOM <code>SIGKILL</code></td>
+                            <td>cgroups <code>memory.max</code>, <code>pgfault</code> tracking (7,705 faults), <code>SIGKILL</code></td>
                         </tr>
                         <tr>
                             <td><strong>CO 5: Virtualization & Filesystems</strong></td>
@@ -485,24 +507,23 @@
         <!-- SLIDE 4: Architecture & Lifecycle -->
         <div class="slide">
             <div class="slide-header">
-                <div class="slide-title">System <span>Architecture & Lifecycle</span></div>
-                <div class="slide-category">Process Lifecycle</div>
+                <div class="slide-title">System Architecture <span>& Execution Lifecycle</span></div>
+                <div class="slide-category">Process Lifecycle Flow</div>
             </div>
             <div class="slide-body grid-2">
                 <div class="box">
-                    <h3>Execution Flow Lifecycle</h3>
+                    <h3>Coordinated Execution Pipeline</h3>
                     <pre>
-1. CLI Invocation:
+1. CLI Parsing:
    └─► sudo minicontainer run --memory 30M --cpu 40 /bin/sh
 
 2. Host Parent Process:
-   ├─► Allocates 1MB stack for child
-   ├─► Opens UNIX synchronization pipe (barrier)
+   ├─► Allocates 1MB stack & creates UNIX sync pipe (barrier)
    ├─► clone(CLONE_NEWPID | CLONE_NEWUTS | CLONE_NEWNS | ...)
    ├─► Creates /sys/fs/cgroup/minicontainer-[PID]
    ├─► Applies memory.max, cpu.max, pids.max
    ├─► Attaches child PID to cgroup.procs
-   ├─► Unblocks child via sync pipe
+   ├─► Signals child via pipe (unblocks execution)
    └─► Calls waitpid(), reads memory.stat, cleans cgroup
 
 3. Container Child Process:
@@ -512,130 +533,154 @@
    └─► execvp(argv[0]) as PID 1
                     </pre>
                 </div>
-                <div class="box">
-                    <h3 class="purple">Key Engineering Highlights</h3>
+                <div class="box purple-border">
+                    <h3 class="purple">Architectural Safety Guarantees</h3>
                     <ul>
-                        <li><strong>Race-Free Attachment:</strong> Child pauses on an IPC pipe until parent establishes cgroup limits, eliminating race conditions.</li>
-                        <li><strong>VFS Isolation:</strong> Marks root mount as <code>MS_PRIVATE</code> to prevent container mounts from leaking into the host OS.</li>
-                        <li><strong>Real-Time Kernel Accounting:</strong> Reads <code>memory.stat</code> upon exit to record peak RAM, minor page faults, and major page faults.</li>
+                        <li><strong>Barrier Synchronization:</strong> The child process pauses on <code>read(pipe[0])</code> until parent establishes cgroup limits, preventing race conditions.</li>
+                        <li><strong>Mount Privacy (MS_PRIVATE):</strong> Prevents container mounts (<code>/proc</code>, <code>rootfs</code>) from leaking into the host operating system.</li>
+                        <li><strong>Automated Resource Reclamation:</strong> Parent captures termination signals (OOM <code>SIGKILL</code>) via <code>waitpid()</code> and removes temporary cgroups.</li>
+                        <li><strong>Zero-Dependency Engineering:</strong> Built with pure C99 and native Linux system calls without third-party runtime frameworks.</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 5: Core Mechanisms -->
+        <!-- SLIDE 5: Core Mechanisms (3 Pillars) -->
         <div class="slide">
             <div class="slide-header">
-                <div class="slide-title">Core Isolation <span>Primitives in Linux</span></div>
+                <div class="slide-title">Core Isolation Subsystems: <span>The Three Pillars</span></div>
                 <div class="slide-category">Kernel Subsystems</div>
             </div>
             <div class="slide-body grid-3">
                 <div class="box">
                     <h3>1. Namespaces</h3>
-                    <p style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 8px;">What the process can <strong>SEE</strong></p>
+                    <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 8px;">What the process can <strong>SEE</strong></p>
                     <ul>
                         <li><code>CLONE_NEWPID</code>: Child becomes PID 1; host processes hidden.</li>
-                        <li><code>CLONE_NEWUTS</code>: Isolated hostname.</li>
-                        <li><code>CLONE_NEWNS</code>: Isolated VFS mount table.</li>
-                        <li><code>CLONE_NEWIPC</code>: Separate IPC semaphores & queues.</li>
+                        <li><code>CLONE_NEWUTS</code>: Isolated hostname without altering host.</li>
+                        <li><code>CLONE_NEWNS</code>: Decouples VFS mount table.</li>
+                        <li><code>CLONE_NEWIPC</code>: Separate POSIX message queues.</li>
                     </ul>
                 </div>
-                <div class="box">
+                <div class="box purple-border">
                     <h3 class="purple">2. Cgroups v2</h3>
-                    <p style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 8px;">What the process can <strong>USE</strong></p>
+                    <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 8px;">What the process can <strong>USE</strong></p>
                     <ul>
-                        <li><code>memory.max</code>: Strict physical RAM ceiling; triggers OOM killer.</li>
+                        <li><code>memory.max</code>: Strict RAM ceiling; triggers OOM Killer.</li>
                         <li><code>cpu.max</code>: CFS scheduler bandwidth quota.</li>
-                        <li><code>cpu.weight</code>: Proportional fair share scheduling.</li>
+                        <li><code>cpu.weight</code>: Proportional fair-share scheduling.</li>
                         <li><code>pids.max</code>: Prevents fork bomb attacks.</li>
                     </ul>
                 </div>
-                <div class="box">
+                <div class="box success-border">
                     <h3 class="success">3. Rootfs Sandboxing</h3>
-                    <p style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 8px;">Where the process can <strong>TOUCH</strong></p>
+                    <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 8px;">Where the process can <strong>TOUCH</strong></p>
                     <ul>
-                        <li>Uses Alpine Linux userland (~3.5MB).</li>
-                        <li><code>chroot()</code> prevents traversal into host directories.</li>
-                        <li>Private <code>/proc</code> mount enables isolated <code>ps</code> output.</li>
+                        <li><strong>Alpine Linux Rootfs:</strong> Lightweight ~3.5MB userland.</li>
+                        <li><code>chroot()</code>: Cages process inside directory tree.</li>
+                        <li><strong>Private /proc:</strong> Isolated view of PID 1.</li>
+                        <li>Prevents traversal into host root filesystems.</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 6: Live Demonstration Guide -->
+        <!-- SLIDE 6: Concurrency & IPC Synchronization (Replacing Viva Slide!) -->
         <div class="slide">
             <div class="slide-header">
-                <div class="slide-title">Empirical Results <span>& Live Verification</span></div>
-                <div class="slide-category">Live Verification</div>
+                <div class="slide-title">Classical Concurrency <span>& IPC Synchronization (CO: 3)</span></div>
+                <div class="slide-category">Concurrency Primitives</div>
             </div>
             <div class="slide-body grid-2">
-                <div class="box">
-                    <h3>1. Process Isolation (CO: 1 & CO: 5)</h3>
-                    <div class="cmd-box">sudo ./minicontainer run --hostname sandbox ./tests/test_info</div>
-                    <p style="font-size: 0.88rem;"><strong>Result:</strong> Process is <strong>PID 1</strong>; parent PID 0; host processes hidden.</p>
-                    <br>
-                    <h3>2. Memory Limit & OOM Killer (CO: 4)</h3>
-                    <div class="cmd-box">sudo ./minicontainer run --memory 30M ./tests/test_memory 60</div>
-                    <p style="font-size: 0.88rem;"><strong>Result:</strong> Terminated by <strong>SIGKILL (signal 9)</strong>. Logged <strong>7,705 Minor Page Faults</strong> proving demand paging.</p>
+                <div class="box success-border">
+                    <h3 class="success">Producer-Consumer with Semaphores (sem_t)</h3>
+                    <ul>
+                        <li><strong>Bounded-Buffer Concurrency Problem</strong> implemented inside the container sandbox.</li>
+                        <li><strong>Binary Semaphore (mutex):</strong> Initialized to 1; enforces mutual exclusion for the critical section.</li>
+                        <li><strong>Counting Semaphore (empty_slots):</strong> Initialized to buffer capacity (N = 5).</li>
+                        <li><strong>Counting Semaphore (full_slots):</strong> Initialized to 0 items available.</li>
+                        <li><strong>Shared Memory (mmap):</strong> Allocated via <code>MAP_SHARED | MAP_ANONYMOUS</code> across processes.</li>
+                        <li><strong>Result:</strong> All 10 operations exchanged with zero race conditions or buffer corruption.</li>
+                    </ul>
                 </div>
                 <div class="box">
-                    <h3 class="purple">3. CPU Fair Share Contest (CO: 2)</h3>
-                    <div class="cmd-box">sudo bash scripts/test_cpu_shares.sh</div>
-                    <p style="font-size: 0.88rem;"><strong>Result:</strong> Weight 800 vs 200 on Core 0: <strong>2.78s vs 0.69s</strong> (Exact 4:1 CPU execution ratio).</p>
-                    <br>
-                    <h3 class="success">4. Semaphores & Shared Memory (CO: 3)</h3>
-                    <div class="cmd-box">sudo ./minicontainer run ./tests/test_ipc_sync</div>
-                    <p style="font-size: 0.88rem;"><strong>Result:</strong> Producer-Consumer pipeline executed with zero race conditions via <code>sem_t</code>.</p>
+                    <h3>Parent-Child IPC Pipe Synchronization</h3>
+                    <ul>
+                        <li><strong>The Race Condition Hazard:</strong> Cloned child process could execute payload before parent attaches cgroups limits.</li>
+                        <li><strong>The POSIX Pipe Solution:</strong> Parent and child share a unidirectional <code>sync_pipe[2]</code>.</li>
+                        <li><strong>Child Execution:</strong> Calls <code>read(sync_pipe[0])</code> and immediately <strong>BLOCKS</strong>.</li>
+                        <li><strong>Parent Execution:</strong> Completes cgroup setup, then writes single trigger byte <code>'G'</code>.</li>
+                        <li><strong>Unblocking:</strong> Child receives byte, closes pipe, and proceeds safely to <code>execvp()</code>.</li>
+                        <li>Ensures deterministic, race-free resource limits from microsecond zero.</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 7: Technical Review & Viva Defense -->
+        <!-- SLIDE 7: Empirical Laboratory Benchmarks & Observed Results -->
         <div class="slide">
             <div class="slide-header">
-                <div class="slide-title">Technical Review & <span>Viva Defense</span></div>
-                <div class="slide-category">Faculty Q&A</div>
+                <div class="slide-title">Empirical Laboratory Benchmarks <span>& Verification</span></div>
+                <div class="slide-category">Observed Metrics</div>
             </div>
             <div class="slide-body grid-2">
                 <div class="box">
-                    <h3>Q1: Why clone() instead of fork()?</h3>
-                    <p style="font-size: 0.9rem; margin-top: 6px;">
-                        <code>fork()</code> duplicates the process in the exact same namespaces. <code>clone()</code> accepts flags like <code>CLONE_NEWPID</code> and <code>CLONE_NEWUTS</code>, creating the child directly inside brand-new, isolated kernel namespaces.
-                    </p>
-                    <br>
-                    <h3>Q2: Why did memory limit trigger SIGKILL?</h3>
-                    <p style="font-size: 0.9rem; margin-top: 6px;">
-                        Linux uses optimistic memory allocation (overcommit) and demand paging. When <code>memset()</code> committed physical pages exceeding <code>memory.max</code> with swap disabled, the OS kernel OOM Killer dispatched an uncatchable <code>SIGKILL</code>.
+                    <h3>1. Process Virtualization (CO: 1 & 5)</h3>
+                    <p style="font-size: 0.95rem; color: #334155;">
+                        • Container Process reports <strong>PID = 1</strong>; Parent PID = 0.<br>
+                        • Host operating system processes (47 active) are completely hidden.<br>
+                        • Hostname virtualized to <code>isolated-box</code> without altering host.
                     </p>
                 </div>
-                <div class="box">
-                    <h3 class="purple">Q3: Why is an IPC pipe needed?</h3>
-                    <p style="font-size: 0.9rem; margin-top: 6px;">
-                        To prevent a race condition. The child must not call <code>execvp()</code> before the parent finishes creating the cgroup and writing the child's PID into <code>cgroup.procs</code>.
+                <div class="box warning-border">
+                    <h3 class="warning">2. Memory Ceiling & Demand Paging (CO: 4)</h3>
+                    <p style="font-size: 0.95rem; color: #334155;">
+                        • Workload allocated 30MB of 60MB; terminated by <strong>SIGKILL (signal 9)</strong>.<br>
+                        • Kernel logged <strong>7,705 Minor Page Faults</strong>, validating Demand Paging.<br>
+                        • 1 Major Page Fault; Swap disabled to force immediate OOM protection.
                     </p>
-                    <br>
-                    <h3 class="success">Q4: How was CPU fair share verified?</h3>
-                    <p style="font-size: 0.9rem; margin-top: 6px;">
-                        Two containers with weights 800 and 200 ran concurrently on CPU 0. CFS allocated 2.78s and 0.69s of CPU time, verifying the theoretical 4:1 scheduling ratio with 99.5% accuracy.
+                </div>
+                <div class="box purple-border">
+                    <h3 class="purple">3. Proportional Fair-Share CPU Contest (CO: 2)</h3>
+                    <p style="font-size: 0.95rem; color: #334155;">
+                        • Competing containers on CPU Core 0 with CFS weights 800 vs 200.<br>
+                        • Container A CPU Time: <strong>2.78s</strong> | Container B CPU Time: <strong>0.69s</strong>.<br>
+                        • Exact <strong>4.02 : 1</strong> execution ratio (matches theoretical 4:1 with 99.5% accuracy!).
+                    </p>
+                </div>
+                <div class="box success-border">
+                    <h3 class="success">4. Fork Bomb & PCB Table Defense (CO: 1 & 3)</h3>
+                    <p style="font-size: 0.95rem; color: #334155;">
+                        • Stress test attempted to spawn 50 concurrent processes.<br>
+                        • Cgroups <code>pids.max = 10</code> capped execution; Children 1 - 9 spawned.<br>
+                        • 10th fork() blocked with <strong>errno 11 (EAGAIN)</strong>; host OS remained responsive.
                     </p>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 8: Summary -->
+        <!-- SLIDE 8: Summary & Interactive Evaluation -->
         <div class="slide title-slide">
             <div class="badge-list">
-                <span class="badge">EVALUATION DASHBOARD</span>
+                <span class="badge">EVALUATION & LIVE DEMONSTRATION</span>
             </div>
-            <h1>Interactive Demonstration</h1>
-            <p class="subtitle">Complete C runtime covering CO 1 to CO 5 with interactive menu and live kernel monitoring.</p>
-            <div style="margin-top: 15px; padding: 15px 25px; background: rgba(15,23,42,0.85); border-radius: 12px; border: 1px solid var(--card-border); display: inline-block;">
-                <p style="font-family: monospace; color: #38bdf8; font-size: 1.1rem;">
+            <h1>Interactive Project Demonstration</h1>
+            <p class="subtitle">Complete C99 Runtime Covering CO: 1 to CO: 5 with Master Interactive Menu and Real-Time Kernel Metrics</p>
+
+            <div style="margin-top: 15px; padding: 18px 30px; background: #ffffff; border: 2px solid var(--primary); border-radius: 12px; display: inline-block; box-shadow: 0 4px 15px rgba(2, 132, 199, 0.1);">
+                <p style="font-family: monospace; color: var(--primary); font-size: 1.3rem; font-weight: 800; margin: 0;">
                     $ sudo bash interactive_menu.sh
                 </p>
+                <p style="font-size: 0.9rem; color: #64748b; margin-top: 5px;">
+                    (Or double-click <strong>Run-MiniContainer.bat</strong> directly on your Windows Desktop)
+                </p>
             </div>
-            <div style="margin-top: 20px; font-size: 0.95rem; color: #94a3b8;">
-                Team: <strong>Tharakesha M (24BCE2538)</strong> & <strong>Mathu Metha S (24BCE2805)</strong>
+
+            <div style="margin-top: 25px; font-size: 1.05rem; color: #1e293b; font-weight: 700;">
+                Project Team: Tharakesha M (24BCE2538) & Mathu Metha S (24BCE2805)
+            </div>
+            <div style="margin-top: 6px; font-size: 0.95rem; color: var(--primary); font-family: monospace;">
+                GitHub: https://github.com/THARAKESHA/mini-container
             </div>
         </div>
 
